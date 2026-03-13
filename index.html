@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A-FRAME PAVILION SCENE</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene shadow="type: pcfsoft">
+
+      <a-assets>
+        <canvas id="miloCanvas" width="256" height="256"></canvas>
+        <canvas id="milkCanvas" width="256" height="256"></canvas>
+      </a-assets>
+
+      <script>
+        const milo = document.getElementById('miloCanvas').getContext('2d');
+        milo.fillStyle = "#008542";
+        milo.fillRect(0, 0, 256, 256);
+        milo.fillStyle = "#FFD700";
+        milo.font = "bold 60px sans-serif";
+        milo.textAlign = "center";
+        milo.fillText("MILO", 128, 145);
+
+        const milk = document.getElementById('milkCanvas').getContext('2d');
+        milk.fillStyle = "#FFFFFF";
+        milk.fillRect(0, 0, 256, 256);
+        milk.fillStyle = "#0000FF";
+        milk.font = "bold 50px sans-serif";
+        milk.textAlign = "center";
+        milk.fillText("MILK", 128, 145);
+      </script>
+
+      <!-- SKY & LIGHTING — exactly as original -->
+      <a-sky color="#87CEEB"></a-sky>
+      <a-light type="ambient" color="#FFF" intensity="0.7"></a-light>
+      <a-light type="directional" color="#FFD580" intensity="1.2" position="3 6 4" castShadow="true"></a-light>
+      <a-light type="point" color="#fffbe6" intensity="0.6" position="0 3.5 -4"></a-light>
+
+      <!-- GROUND — exactly as original -->
+      <a-plane rotation="-90 0 0" width="60" height="60" color="#7CBA5A" shadow="receive: true"></a-plane>
+      <!-- Paved floor inside pavilion -->
+      <a-plane rotation="-90 0 0" position="0 0.01 -4" width="8" height="7" color="#D8C9A3" shadow="receive: true"></a-plane>
+
+      <!-- ======================= -->
+      <!--        PAVILION         -->
+      <!-- ======================= -->
+      <a-entity position="0 0 -4">
+
+        <!-- 6 Columns -->
+        <a-cylinder position="-3.5 2.1 2.8"  radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+        <a-cylinder position=" 3.5 2.1 2.8"  radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+        <a-cylinder position="-3.5 2.1 0"    radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+        <a-cylinder position=" 3.5 2.1 0"    radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+        <a-cylinder position="-3.5 2.1 -2.8" radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+        <a-cylinder position=" 3.5 2.1 -2.8" radius="0.12" height="4.2" color="#B5651D" shadow="cast:true"></a-cylinder>
+
+        <!-- Pavilion Roof -->
+        <a-box position="0 4.3 0" width="7.5" height="0.18" depth="6.3" color="#8B5E3C" shadow="cast:true;receive:true"></a-box>
+        <a-box position="0 4.42 0" width="7.9" height="0.08" depth="6.7" color="#6B4226"></a-box>
+        <a-box position="0 4.52 0" width="7.9" height="0.1" depth="0.25" color="#5C3317"></a-box>
+
+        <!-- Top beams -->
+        <a-box position="0 4.18 2.8"  width="7.2" height="0.12" depth="0.2" color="#7A4A1E"></a-box>
+        <a-box position="0 4.18 -2.8" width="7.2" height="0.12" depth="0.2" color="#7A4A1E"></a-box>
+        <a-box position="-3.5 4.18 0" width="0.2" height="0.12" depth="5.6" color="#7A4A1E"></a-box>
+        <a-box position=" 3.5 4.18 0" width="0.2" height="0.12" depth="5.6" color="#7A4A1E"></a-box>
+
+        <!-- Railings -->
+        <a-box position="-3.5 0.45 0" width="0.06" height="0.9" depth="5.4" color="#C49A6C" opacity="0.5"></a-box>
+        <a-box position=" 3.5 0.45 0" width="0.06" height="0.9" depth="5.4" color="#C49A6C" opacity="0.5"></a-box>
+
+        <!-- ======================= -->
+        <!--   CEILING FAN — FAST    -->
+        <!--   dur: 400ms = visibly  -->
+        <!--   spinning at full speed-->
+        <!-- ======================= -->
+        <a-entity position="0 4.1 0">
+          <a-cylinder position="0 0.08 0" radius="0.025" height="0.35" color="#444"></a-cylinder>
+          <a-cylinder position="0 -0.1 0" radius="0.1" height="0.18" color="#333"></a-cylinder>
+          <a-entity id="fanBlades" position="0 -0.1 0"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 400; easing: linear">
+            <a-box position=" 0.55 0 0"    width="0.9" height="0.04" depth="0.22" color="#C8A86E" rotation="0 0 -8"></a-box>
+            <a-box position="-0.55 0 0"    width="0.9" height="0.04" depth="0.22" color="#C8A76E" rotation="0 0  8"></a-box>
+            <a-box position="0 0  0.55"    width="0.22" height="0.04" depth="0.9" color="#C8B96E" rotation="-8 0 0"></a-box>
+            <a-box position="0 0 -0.55"    width="0.22" height="0.04" depth="0.9" color="#C8B96E" rotation=" 8 0 0"></a-box>
+          </a-entity>
+          <a-sphere position="0 -0.26 0" radius="0.055" color="#FFFDE7" material="emissive:#FFFACD; emissiveIntensity:0.8"></a-sphere>
+        </a-entity>
+
+        <!-- ======================= -->
+        <!--   CIRCULAR TABLE        -->
+        <!-- ======================= -->
+        <a-entity shadow="cast: true; receive: true">
+          <!-- Round table top — same dark brown as original -->
+          <a-cylinder position="0 1.0 0" radius="1.5" height="0.15" color="#3E2723"></a-cylinder>
+          <!-- 4 legs same as original -->
+          <a-cylinder position="-1.0 0.5 -1.0" radius="0.12" height="1.0" color="#5D4037"></a-cylinder>
+          <a-cylinder position=" 1.0 0.5 -1.0" radius="0.12" height="1.0" color="#5D4037"></a-cylinder>
+          <a-cylinder position="-1.0 0.5  1.0" radius="0.12" height="1.0" color="#5D4037"></a-cylinder>
+          <a-cylinder position=" 1.0 0.5  1.0" radius="0.12" height="1.0" color="#5D4037"></a-cylinder>
+        </a-entity>
+
+        <!-- ======================= -->
+        <!--  TRAY WITH ITEMS        -->
+        <!-- ======================= -->
+        <a-entity shadow="cast: true; receive: true">
+          <!-- Tray — same pink as original -->
+          <a-box position="0 1.2 0" width="2.2" height="0.1" depth="1.3" color="#FF007F"></a-box>
+          <!-- Tray legs -->
+          <a-cylinder position="-0.9 0.82 -0.5" radius="0.05" height="0.28" color="#212121"></a-cylinder>
+          <a-cylinder position=" 0.9 0.82 -0.5" radius="0.05" height="0.28" color="#212121"></a-cylinder>
+          <a-cylinder position="-0.9 0.82  0.5" radius="0.05" height="0.28" color="#212121"></a-cylinder>
+          <a-cylinder position=" 0.9 0.82  0.5" radius="0.05" height="0.28" color="#212121"></a-cylinder>
+
+          <!-- Milo can -->
+          <a-cylinder position="-0.4 1.43 0"    radius="0.12" height="0.35" material="src: #miloCanvas"></a-cylinder>
+          <!-- Milk carton -->
+          <a-cylinder position=" 0.1 1.40 0.2"  radius="0.10" height="0.25" material="src: #milkCanvas"></a-cylinder>
+
+          <!-- Cyan cup -->
+          <a-entity position="-0.7 1.33 0.4">
+            <a-cylinder radius="0.07" height="0.18" color="#00FFFF"></a-cylinder>
+            <a-torus position="0.07 0 0" radius="0.04" radius-tubular="0.008" arc="180" rotation="0 90 0" color="#00FFFF"></a-torus>
+          </a-entity>
+          <!-- Yellow cup -->
+          <a-entity position="0.7 1.33 0.4">
+            <a-cylinder radius="0.07" height="0.18" color="#FFFF00"></a-cylinder>
+            <a-torus position="0.07 0 0" radius="0.04" radius-tubular="0.008" arc="180" rotation="0 90 0" color="#FFFF00"></a-torus>
+          </a-entity>
+        </a-entity>
+
+      </a-entity><!-- end pavilion -->
+
+      <!-- ======================= -->
+      <!--   CHAIRS — original     -->
+      <!-- ======================= -->
+      <!-- Left chair -->
+      <a-entity position="-1.5 0 -4" rotation="0 90 0">
+        <a-box position="0 0.45 0"    width="0.6" height="0.1"  depth="0.6" color="#FF9800"></a-box>
+        <a-box position="-0.25 0.9 0" width="0.08" height="0.8" depth="0.6" color="#FF9800"></a-box>
+        <a-cylinder position=" 0.22 0.22  0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position=" 0.22 0.22 -0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position="-0.22 0.22  0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position="-0.22 0.22 -0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+      </a-entity>
+
+      <!-- Right chair -->
+      <a-entity position="1.5 0 -4" rotation="0 -90 0">
+        <a-box position="0 0.45 0"    width="0.6" height="0.1"  depth="0.6" color="#FF9800"></a-box>
+        <a-box position="-0.25 0.9 0" width="0.08" height="0.8" depth="0.6" color="#FF9800"></a-box>
+        <a-cylinder position=" 0.22 0.22  0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position=" 0.22 0.22 -0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position="-0.22 0.22  0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+        <a-cylinder position="-0.22 0.22 -0.22" radius="0.03" height="0.45" color="#333"></a-cylinder>
+      </a-entity>
+
+      <!-- ======================= -->
+      <!--   NEW BEAUTIFUL FLOWERS  -->
+      <!-- ======================= -->
+
+      <!-- Front-left cluster — warm sunset pinks & corals -->
+      <a-entity position="-4.2 0 -1.5">
+        <a-cylinder position="0 0.25 0" radius="0.025" height="0.5"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.55 0" radius="0.08"  color="#FFFFFF"></a-sphere>
+        <a-torus    position="0 0.55 0" radius="0.12"  radius-tubular="0.04" color="#FF6B9D" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="-4.5 0 -1.0">
+        <a-cylinder position="0 0.2 0"  radius="0.025" height="0.4"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.45 0" radius="0.075" color="#FFF9C4"></a-sphere>
+        <a-torus    position="0 0.45 0" radius="0.11"  radius-tubular="0.038" color="#FF3CAC" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="-4.0 0 -0.5">
+        <a-cylinder position="0 0.3 0"  radius="0.025" height="0.6"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.65 0" radius="0.085" color="#FFECB3"></a-sphere>
+        <a-torus    position="0 0.65 0" radius="0.13"  radius-tubular="0.042" color="#F9A825" rotation="90 0 0"></a-torus>
+      </a-entity>
+
+      <!-- Front-right cluster — violet & lavender -->
+      <a-entity position="4.2 0 -1.5">
+        <a-cylinder position="0 0.25 0" radius="0.025" height="0.5"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.55 0" radius="0.08"  color="#EDE7F6"></a-sphere>
+        <a-torus    position="0 0.55 0" radius="0.12"  radius-tubular="0.04" color="#7C4DFF" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="4.5 0 -1.0">
+        <a-cylinder position="0 0.2 0"  radius="0.025" height="0.4"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.45 0" radius="0.075" color="#F3E5F5"></a-sphere>
+        <a-torus    position="0 0.45 0" radius="0.11"  radius-tubular="0.038" color="#E040FB" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="4.0 0 -0.5">
+        <a-cylinder position="0 0.3 0"  radius="0.025" height="0.6"  color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.65 0" radius="0.085" color="#FCE4EC"></a-sphere>
+        <a-torus    position="0 0.65 0" radius="0.13"  radius-tubular="0.042" color="#F06292" rotation="90 0 0"></a-torus>
+      </a-entity>
+
+      <!-- Back cluster — tropical orange & turquoise -->
+      <a-entity position="-3.8 0 -7.2">
+        <a-cylinder position="0 0.28 0" radius="0.025" height="0.55" color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.6 0"  radius="0.08"  color="#FFF8E1"></a-sphere>
+        <a-torus    position="0 0.6 0"  radius="0.12"  radius-tubular="0.04" color="#FF6D00" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="3.8 0 -7.2">
+        <a-cylinder position="0 0.28 0" radius="0.025" height="0.55" color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.6 0"  radius="0.08"  color="#E0F7FA"></a-sphere>
+        <a-torus    position="0 0.6 0"  radius="0.12"  radius-tubular="0.04" color="#00BCD4" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="0 0 -7.4">
+        <a-cylinder position="0 0.32 0" radius="0.025" height="0.64" color="#3A7D44"></a-cylinder>
+        <a-sphere   position="0 0.7 0"  radius="0.09"  color="#FFCCBC"></a-sphere>
+        <a-torus    position="0 0.7 0"  radius="0.14"  radius-tubular="0.045" color="#FF5722" rotation="90 0 0"></a-torus>
+      </a-entity>
+
+      <!-- Front-centre — soft baby pink & sky blue -->
+      <a-entity position="-1.2 0 -1.0">
+        <a-cylinder position="0 0.22 0" radius="0.02" height="0.44" color="#2E8B57"></a-cylinder>
+        <a-sphere   position="0 0.48 0" radius="0.07" color="#FFEEFF"></a-sphere>
+        <a-torus    position="0 0.48 0" radius="0.10" radius-tubular="0.035" color="#CE93D8" rotation="90 0 0"></a-torus>
+      </a-entity>
+      <a-entity position="1.2 0 -1.0">
+        <a-cylinder position="0 0.22 0" radius="0.02" height="0.44" color="#2E8B57"></a-cylinder>
+        <a-sphere   position="0 0.48 0" radius="0.07" color="#E3F2FD"></a-sphere>
+        <a-torus    position="0 0.48 0" radius="0.10" radius-tubular="0.035" color="#29B6F6" rotation="90 0 0"></a-torus>
+      </a-entity>
+
+      <!-- Decorative ball & plant — same as original -->
+      <a-sphere   position="3 0.4 -2"  radius="0.4" color="#FF3333" shadow></a-sphere>
+      <a-cylinder position="-3 0.5 -1" radius="0.3" height="1" color="#228B22"></a-cylinder>
+
+      <!-- CAMERA -->
+      <a-entity position="0 1.6 2.5">
+        <a-camera look-controls></a-camera>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
